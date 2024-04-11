@@ -199,7 +199,7 @@ impl FromStr for SlotId {
 
 impl SlotId {
     /// Returns the [`ObjectId`] that corresponds to a given [`SlotId`].
-    pub(crate) fn object_id(self) -> ObjectId {
+    pub fn object_id(self) -> ObjectId {
         match self {
             SlotId::Authentication => 0x005f_c105,
             SlotId::Signature => 0x005f_c10a,
