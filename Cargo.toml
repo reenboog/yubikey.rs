@@ -26,7 +26,7 @@ x509-cert = { version = "0.2.5", features = [ "builder", "hazmat" ] }
 der = "0.7.1"
 des = "0.8"
 aes = { version = "0.8.1", features = ["zeroize"] }
-cipher = "0.4.4"
+cipher = "0.4.2"
 crypto-common = { version = "0.1.6", features = ["rand_core"] }
 elliptic-curve = "0.13"
 hex = { package = "base16ct", version = "0.2", features = ["alloc"] }
