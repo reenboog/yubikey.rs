@@ -51,7 +51,7 @@ use crate::{
     serialization::*,
     setting,
     yubikey::YubiKey,
-    Buffer, ObjectId,
+    Buffer, MgmKeyAlgorithm, ObjectId,
 };
 use elliptic_curve::{sec1::EncodedPoint as EcPublicKey, PublicKey};
 use log::{debug, error, warn};
@@ -1218,8 +1218,14 @@ fn read_public_key(
 pub enum ManagementAlgorithmId {
     /// Used on PIN and PUK slots.
     PinPuk,
-    /// Used on the key management slot.
+    /// Used on the key management slot, when 3des is selected
     ThreeDes,
+    /// Used on the key management slot to indicate the management key is AES-128.
+    Aes128,
+    /// Used on the key management slot to indicate the management key is AES-192.
+    Aes192,
+    /// Used on the key management slot to indicate the management key is AES-256.
+    Aes256,
     /// Used on all other slots.
     Asymmetric(AlgorithmId),
 }
@@ -1230,7 +1236,10 @@ impl TryFrom<u8> for ManagementAlgorithmId {
     fn try_from(value: u8) -> Result<Self> {
         match value {
             0xff => Ok(ManagementAlgorithmId::PinPuk),
-            0x03 => Ok(ManagementAlgorithmId::ThreeDes),
+            des::TdesEde3::ALGORITHM_ID => Ok(ManagementAlgorithmId::ThreeDes),
+            aes::Aes128::ALGORITHM_ID => Ok(ManagementAlgorithmId::Aes128),
+            aes::Aes192::ALGORITHM_ID => Ok(ManagementAlgorithmId::Aes192),
+            aes::Aes256::ALGORITHM_ID => Ok(ManagementAlgorithmId::Aes256),
             oth => AlgorithmId::try_from(oth).map(ManagementAlgorithmId::Asymmetric),
         }
     }
@@ -1240,7 +1249,10 @@ impl From<ManagementAlgorithmId> for u8 {
     fn from(id: ManagementAlgorithmId) -> u8 {
         match id {
             ManagementAlgorithmId::PinPuk => 0xff,
-            ManagementAlgorithmId::ThreeDes => 0x03,
+            ManagementAlgorithmId::ThreeDes => des::TdesEde3::ALGORITHM_ID,
+            ManagementAlgorithmId::Aes128 => aes::Aes128::ALGORITHM_ID,
+            ManagementAlgorithmId::Aes192 => aes::Aes192::ALGORITHM_ID,
+            ManagementAlgorithmId::Aes256 => aes::Aes256::ALGORITHM_ID,
             ManagementAlgorithmId::Asymmetric(oth) => oth.into(),
         }
     }
