@@ -251,11 +251,6 @@ impl<'tx> Transaction<'tx> {
     ) -> Result<()> {
         let p2 = if require_touch { 0xfe } else { 0xff };
 
-        // let mut data = [0u8; DES_LEN_3DES + 3];
-        // data[0] = ALGO_3DES;
-        // data[1] = KEY_CARDMGM;
-        // data[2] = DES_LEN_3DES as u8;
-        // data[3..3 + DES_LEN_3DES].copy_from_slice(new_key.as_ref());
         let mut data = Vec::with_capacity(new_key.key_size() as usize + 3);
         data.push(new_key.algorithm_id());
         data.push(KEY_CARDMGM);

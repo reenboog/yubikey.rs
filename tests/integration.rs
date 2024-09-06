@@ -130,54 +130,6 @@ fn auth_default_mgm(yubikey: &mut YubiKey) {
 }
 
 //
-// Management key support
-//
-
-// #[cfg(feature = "untested")]
-// #[test]
-// #[ignore]
-// fn test_set_mgmkey() {
-//     let mut yubikey = YUBIKEY.lock().unwrap();
-
-//     assert!(yubikey.verify_pin(b"123456").is_ok());
-
-//     fn test_mgm<M: MgmKeyAlgorithm>(yubikey: &mut YubiKey) {
-//         assert!(yubikey.authenticate::<M>(MgmKey::default()).is_ok());
-//         assert!(MgmKey::<M>::get_protected(yubikey).is_err());
-
-//         // Set a protected management key.
-//         assert!(MgmKey::<M>::generate().set_protected(yubikey).is_ok());
-//         let protected = MgmKey::<M>::get_protected(yubikey).unwrap();
-//         assert!(yubikey.authenticate::<M>(MgmKey::default()).is_err());
-//         assert!(yubikey.authenticate(protected.clone()).is_ok());
-
-//         // Set a manual management key.
-//         let manual = MgmKey::<M>::generate();
-//         assert!(manual.set_manual(yubikey, false).is_ok());
-//         assert!(MgmKey::<M>::get_protected(yubikey).is_err());
-//         assert!(yubikey.authenticate(MgmKey::<M>::default()).is_err());
-//         assert!(yubikey.authenticate(protected.clone()).is_err());
-//         assert!(yubikey.authenticate(manual.clone()).is_ok());
-
-//         // Set back to the default management key.
-//         assert!(MgmKey::<M>::set_default(yubikey).is_ok());
-//         assert!(MgmKey::<M>::get_protected(yubikey).is_err());
-//         assert!(yubikey.authenticate(protected).is_err());
-//         assert!(yubikey.authenticate(manual).is_err());
-//         assert!(yubikey.authenticate(MgmKey::<M>::default()).is_ok());
-//     }
-
-//     match get_mgm_key_meta(&mut yubikey).algorithm {
-//         ManagementAlgorithmId::ThreeDes => test_mgm::<des::TdesEee3>(&mut yubikey),
-//         ManagementAlgorithmId::Aes192 => test_mgm::<aes::Aes192>(&mut yubikey),
-//         ManagementAlgorithmId::Aes128 | ManagementAlgorithmId::Aes256 => {
-//             panic!("AES128 or AES256 should not be a default key")
-//         }
-//         other => panic!("unexpected management key algorithm: {:?}", other),
-//     }
-// }
-
-//
 // Certificate support
 //
 

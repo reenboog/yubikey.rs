@@ -276,34 +276,6 @@ impl<C: MgmKeyAlgorithm> MgmKey<C> {
         MgmKey::from_bytes(mgm)
     }
 
-    /// Get protected management key (MGM)
-    // #[cfg(feature = "untested")]
-    // pub fn get_protected(yubikey: &mut YubiKey) -> Result<Self> {
-    //     let txn = yubikey.begin_transaction()?;
-
-    //     let protected_data = ProtectedData::read(&txn).map_err(|e| {
-    //         error!("could not read protected data (err: {:?})", e);
-    //         e
-    //     })?;
-
-    //     let item = protected_data.get_item(TAG_PROTECTED_MGM).map_err(|e| {
-    //         error!("could not read protected MGM from metadata (err: {:?})", e);
-    //         e
-    //     })?;
-
-    //     if item.len() != C::KEY_SIZE as usize {
-    //         error!(
-    //             "protected data contains MGM, but is the wrong size: {} (expected {})",
-    //             item.len(),
-    //             C::KEY_SIZE
-    //         );
-
-    //         return Err(Error::AuthenticationError);
-    //     }
-
-    //     MgmKey::from_bytes(item)
-    // }
-
     /// Resets the management key for the given YubiKey to the default value.
     ///
     /// This will wipe any metadata related to derived and PIN-protected management keys.
