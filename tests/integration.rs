@@ -109,7 +109,6 @@ fn test_verify_pin() {
     assert!(yubikey.verify_pin(b"123456").is_ok());
 }
 
-// FIXME: use this to automatically select a management key
 fn get_mgm_key_meta(yubikey: &mut YubiKey) -> piv::SlotMetadata {
     piv::metadata(yubikey, SlotId::Management(ManagementSlotId::Management)).unwrap()
 }
